@@ -76,10 +76,11 @@ def main(args=None):
     print(args)
 
     use_cuda = not args.no_cuda and torch.cuda.is_available()
-    device = torch.device("cuda" if use_cuda else "cpu")
+    print(f'Cuda: {use_cuda}')
+    device = torch.device("cuda:0" if use_cuda else "cpu")
     torch.manual_seed(args.seed)
 
-    # torch.cuda.set_device(5)
+    #torch.cuda.set_device(0)
 
     dataset_name = os.path.split(args.root)[-1]
 
@@ -104,7 +105,6 @@ def main(args=None):
 
     model = SCNN(c_in=X_train.shape[1], c_out=nb_classes, nf=args.ch_size, depth=args.depth, kernel=args.k_size, pad_zero=args.pad_zero)
     model.cuda()
-
     optimizer = torch.optim.Adam(model.parameters(), lr=3e-4)
 
     lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, args.epochs, 1e-4, last_epoch=-1)
@@ -126,7 +126,7 @@ def main(args=None):
             mask.death_decay_update(decay_flag=False)
         if train_loss >= output:
             print('Saving model')
-            save_path = '/data/xiaoq/sparse_seg/models_save_app/DSN_sort_%s_%s_%s_%s.pth'% (args.data, args.density, args.c_size, random_str)
+            save_path = './data/models/DSN_sort_%s_%s_%s_%s.pth'% (args.data, args.density, args.c_size, random_str)
             train_loss = output
             torch.save(model.state_dict(), save_path)
 
@@ -184,8 +184,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     data_path = args.root
-    # datalist = os.listdir(data_path)
-    datalist = ["eeg2", "daily_sport", "HAR"]
+    datalist = os.listdir(data_path)
     datalist.sort()
 
     for data in datalist:
