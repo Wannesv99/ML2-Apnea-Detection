@@ -16,7 +16,7 @@ def load_UCR_data(root, file_name='', normalize_timeseries=2, verbose=True):
     test_name = '_'.join([file_name, 'TEST'])
     data_path = os.path.join(root, file_name)
 
-    df = pd.read_csv(os.path.join(data_path, train_name), header=None, encoding='latin-1')
+    df = pd.read_csv(os.path.join(data_path, train_name) + '.tsv', header=None, encoding='latin-1', sep='\t')
 
     is_timeseries = True # assume all input data is univariate time series
 
@@ -65,7 +65,7 @@ def load_UCR_data(root, file_name='', normalize_timeseries=2, verbose=True):
 
     if verbose: print("Finished loading train dataset..")
 
-    df = pd.read_csv(os.path.join(data_path, test_name), header=None, encoding='latin-1')
+    df = pd.read_csv(os.path.join(data_path, test_name) + '.tsv', header=None, encoding='latin-1', sep='\t')
 
     # remove all columns which are completely empty
     df.dropna(axis=1, how='all', inplace=True)
