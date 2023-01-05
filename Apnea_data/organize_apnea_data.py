@@ -1,5 +1,6 @@
 import wfdb
 import numpy as np
+import pandas as pd
 
 physionet_folder = 'physionet_apnea'
 
@@ -37,7 +38,7 @@ def merge_data_w_ann(subject):
         elif annotations[i] == 'N':
             label = 0
         ecg_w_ann[i, 0] = label
-        ecg_w_ann[i, 1:] = ecg_data[0, i * fs * 60:(i + 1) * fs * 60]
+        ecg_w_ann[i, 1:] = ecg_data[0][i * fs * 60:(i + 1) * fs * 60]
 
     return ecg_w_ann
 
@@ -60,4 +61,6 @@ for file in files:
 # Loop through subjects to merge and save to csv per subject
 for subject in subjects:
     ecg_w_ann = merge_data_w_ann(subject)
-    np.savetxt("./"+physionet_folder+"/"+subject+".csv", ecg_w_ann, delimiter=",")
+    df = pd.DataFrame(ecg_w_ann)
+    df.to_csv("./" + physionet_folder + "/" + subject + ".csv", header=False, index=False)
+    #np.savetxt("./"+physionet_folder+"/"+subject+".csv", ecg_w_ann, delimiter=",")
