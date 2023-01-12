@@ -59,8 +59,15 @@ for file in files:
 
 
 # Loop through subjects to merge and save to csv per subject
+# for subject in subjects:
+#     ecg_w_ann = merge_data_w_ann(subject)
+#     df = pd.DataFrame(ecg_w_ann)
+#     df.to_csv("./" + physionet_folder + "/" + subject + ".csv", header=False, index=False)
+#     #np.savetxt("./"+physionet_folder+"/"+subject+".csv", ecg_w_ann, delimiter=",")
+
+concat = pd.DataFrame()
 for subject in subjects:
     ecg_w_ann = merge_data_w_ann(subject)
-    df = pd.DataFrame(ecg_w_ann)
-    df.to_csv("./" + physionet_folder + "/" + subject + ".csv", header=False, index=False)
-    #np.savetxt("./"+physionet_folder+"/"+subject+".csv", ecg_w_ann, delimiter=",")
+    dfi = pd.DataFrame(ecg_w_ann)
+    concat = pd.concat([concat, dfi], axis=0
+    concat.to_csv("./" + physionet_folder + "/" + subject + ".csv", header=False, index=False)
