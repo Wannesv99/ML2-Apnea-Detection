@@ -10,6 +10,135 @@ def set_nan_to_zero(a):
     a[where_are_NaNs] = 0
     return a
 
+def train_test_split(subject_df: pd.DataFrame, train_fraction=0.8, train_seed=10):
+    '''
+        Split frame into train and test sets using the indices of the resampled 
+        training set to generate the test set.
+        
+        Params:
+        subject_df: frame containing labelled data.
+        train_fraction: relative size of the training set.
+        train_seed: constant to fix the random state of the resampling method
+    '''
+    train_frame = subject_df.sample(frac=train_fraction, random_state=train_seed)
+    test_frame  = subject_df.drop(train_frame.index)
+    assert len(train_frame) + len(test_frame) == len(subject_df), f"Expected lengths of train and test set to be {len(df)}, got: {len(train) + len(test)}."
+    return train_frame, test_frame
+
+
+def load_apnea_data(root, file_name='', normalize_timeseries=2, verbose=True, random_seed=10):
+
+    data_path = os.path.join(root, file_name)
+
+    print(os.path.join(data_path, file_name))
+    df = pd.read_csv(os.path.join(data_path, file_name) + '.csv', header=None)
+
+    train_df, test_df = train_test_split(df, train_fraction=0.8, train_seed=random_seed)
+    test_df.to_csv(f'test_data_{random_seed}.csv', header=None, index=False)
+
+    is_timeseries = True # assume all input data is univariate time series
+
+    # remove all columns which are completely empty
+    train_df.dropna(axis=1, how='all', inplace=True)
+
+    if not is_timeseries:
+        data_idx = train_df.columns[1:]
+        min_val = min(train_df.loc[:, data_idx].min())
+        if min_val == 0:
+            train_df.loc[:, data_idx] += 1
+
+    # fill all missing columns with 0
+    train_df.fillna(0, inplace=True)
+
+    # cast all data into integer (int32)
+    if not is_timeseries:
+        train_df[train_df.columns] = train_df[train_df.columns].astype(np.int32)
+
+    # extract labels Y and normalize to [0 - (MAX - 1)] range
+    y_train = train_df[[0]].values
+    nb_classes = len(np.unique(y_train))
+    y_train = (y_train - y_train.min()) / (y_train.max() - y_train.min()) * (nb_classes - 1)
+    y_train = np.squeeze(y_train)
+
+    # drop labels column from train set X
+    train_df.drop(train_df.columns[0], axis=1, inplace=True)
+
+    X_train = train_df.values
+
+    if is_timeseries:
+        X_train = X_train[:, np.newaxis, :]
+        # scale the values
+        if normalize_timeseries:
+            normalize_timeseries = int(normalize_timeseries)
+
+            if normalize_timeseries == 2:
+                X_train_mean = X_train.mean()
+                X_train_std = X_train.std()
+                X_train = (X_train - X_train_mean) / (X_train_std + 1e-8)
+
+            else:
+                X_train_mean = X_train.mean(axis=-1, keepdims=True)
+                X_train_std = X_train.std(axis=-1, keepdims=True)
+                X_train = (X_train - X_train_mean) / (X_train_std + 1e-8)
+
+    if verbose: print("Finished loading train dataset..")
+
+    # remove all columns which are completely empty
+    test_df.dropna(axis=1, how='all', inplace=True)
+
+    if not is_timeseries:
+        data_idx = test_df.columns[1:]
+        min_val = min(test_df.loc[:, data_idx].min())
+        if min_val == 0:
+            test_df.loc[:, data_idx] += 1
+
+    # fill all missing columns with 0
+    test_df.fillna(0, inplace=True)
+
+    # cast all data into integer (int32)
+    if not is_timeseries:
+        test_df[test_df.columns] = test_df[test_df.columns].astype(np.int32)
+
+    # extract labels Y and normalize to [0 - (MAX - 1)] range
+    y_test = test_df[[0]].values
+    nb_classes = len(np.unique(y_test))
+    y_test = (y_test - y_test.min()) / (y_test.max() - y_test.min()) * (nb_classes - 1)
+    y_test = np.squeeze(y_test)
+
+    # remove all columns which are completely empty
+    test_df.dropna(axis=1, how='all', inplace=True)
+    # fill all missing columns with 0
+    test_df.fillna(0, inplace=True)
+
+    # drop labels column from train set X
+    test_df.drop(df.columns[0], axis=1, inplace=True)
+
+    X_test = test_df.values
+
+    if is_timeseries:
+        X_test = X_test[:, np.newaxis, :]
+        # scale the values
+        if normalize_timeseries:
+            normalize_timeseries = int(normalize_timeseries)
+
+            if normalize_timeseries == 2:
+                X_test = (X_test - X_train_mean) / (X_train_std + 1e-8)
+            else:
+                X_test_mean = X_test.mean(axis=-1, keepdims=True)
+                X_test_std = X_test.std(axis=-1, keepdims=True)
+                X_test = (X_test - X_test_mean) / (X_test_std + 1e-8)
+
+    if verbose:
+        print("Finished loading test dataset..")
+        print()
+        print("Number of train samples : ", X_train.shape[0], "Number of test samples : ", X_test.shape[0])
+        print("Number of classes : ", nb_classes)
+        print("Sequence length : ", X_train.shape[-1])
+
+    return X_train, y_train, X_test, y_test, nb_classes
+
+
+
 def load_UCR_data(root, file_name='', normalize_timeseries=2, verbose=True):
 
     train_name = '_'.join([file_name, 'TRAIN'])
