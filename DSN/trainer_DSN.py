@@ -3,7 +3,7 @@ import torch
 from torch.utils import data
 from model.SCNN import SCNN
 from utils.utils import generate_random_str
-from utils.dataset_timeseries import load_UCR_data, get_timeseries_dataset, load_dataset_mul
+from utils.dataset_timeseries import load_apnea_data, load_UCR_data, get_timeseries_dataset, load_dataset_mul
 from utils.TSC_data_loader import TSC_multivariate_data_loader
 import argparse
 import sparselearning
@@ -84,7 +84,10 @@ def main(args=None):
 
     dataset_name = os.path.split(args.root)[-1]
 
-    if 'UCR_TS' in dataset_name:
+
+    if 'Apnea' in dataset_name:
+        X_train, Y_train, X_test, Y_test, nb_classes = load_apnea_data(root=args.root, file_name=args.data, normalize_timeseries=None, random_seed=args.split_seed)
+    elif 'UCR_TS' in dataset_name:
         X_train, Y_train, X_test, Y_test, nb_classes = load_UCR_data(root=args.root, file_name=args.data, normalize_timeseries=None)
     elif 'UEA_TS_Archive' in dataset_name:
         X_train, Y_train, X_test, Y_test, nb_classes = TSC_multivariate_data_loader(args.root, args.data)
@@ -126,7 +129,7 @@ def main(args=None):
             mask.death_decay_update(decay_flag=False)
         if train_loss >= output:
             print('Saving model')
-            save_path = './data/models/DSN_sort_%s_%s_%s_%s.pth'% (args.data, args.density, args.c_size, random_str)
+            save_path = './data/models/DSN_sort_%s_%s_%s_%s_%s.pth'% (args.data, args.density, args.c_size, args.split_seed, random_str)
             train_loss = output
             torch.save(model.state_dict(), save_path)
 
@@ -176,6 +179,7 @@ if __name__ == '__main__':
     parser.add_argument('--ch_size', type=int, default=47, help='channel size (default: 47)')
     parser.add_argument('--k_size', type=int, default=39, help='kernel size (default: 39)')
     parser.add_argument('--pad_zero', type=str2bool, default=False, help='padding method (default: False)') ##set True for UCR2018
+    parser.add_argument('--split_seed', type=int, default=43, help='Train and test split seed')
 
 
     # ITOP settings
@@ -189,4 +193,5 @@ if __name__ == '__main__':
 
     for data in datalist:
         args.data = data
+        print(data)
         main(args)
