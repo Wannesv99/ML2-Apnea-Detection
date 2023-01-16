@@ -47,8 +47,13 @@ def merge_data_w_ann(subject: str):
 # sorted list containing subject paths
 subjects = sorted([f"./{s.split('.')[1]}" for s in glob.glob(f'./{physionet_folder}/*.hea') if re.search(r'[abc][0-9]+\.hea$', s)])
 
-# Loop through subjects to merge and save to csv per subject
+# Loop through subjects to merge and save to csv per subject and merge all data into one file with all minutes
+ecg_w_ann_all = np.empty((0,6001))
 for subject in subjects:
-    name = subject[-3:]
     ecg_w_ann = merge_data_w_ann(subject)
     np.savetxt(f"./{export_folder}/{name}.csv", ecg_w_ann, delimiter=",")
+    ecg_w_ann_all = np.concatenate((ecg_w_ann_all,ecg_w_ann))
+
+# Save merge of all data into one big file with all minutes of all patients
+np.savetxt(f"./{export_folder}/all_subjects.csv", ecg_w_ann_all, delimiter=",")
+

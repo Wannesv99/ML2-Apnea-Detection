@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="39f206a3-b2e9-4f64-9956-9f572bb4f210" name="Changes" comment="Merging for all subjects added, besides saving per subject">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Apnea_data/organize_ecg.py" beforeDir="false" afterPath="$PROJECT_DIR$/Apnea_data/organize_ecg.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +27,19 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="ef20aa13-3446-40cf-a845-e16946e4faec" />
+        <option name="url" value="https://github.com/Wannesv99/ML2-Apnea-Detection.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
