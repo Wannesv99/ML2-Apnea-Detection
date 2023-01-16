@@ -69,5 +69,7 @@ concat = pd.DataFrame()
 for subject in subjects:
     ecg_w_ann = merge_data_w_ann(subject)
     dfi = pd.DataFrame(ecg_w_ann)
-    concat = pd.concat([concat, dfi], axis=0
-    concat.to_csv("./" + physionet_folder + "/" + subject + ".csv", header=False, index=False)
+    concat = pd.concat([concat, dfi], axis=0)
+
+#concat.to_csv("./" + physionet_folder + "/" + subject + ".csv", header=False, index=False)
+concat.to_csv("./" + physionet_folder + "/concatenated_ECG_data.csv", header=False, index=False)
