@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="39f206a3-b2e9-4f64-9956-9f572bb4f210" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Apnea_data/ResNet_CNN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="39f206a3-b2e9-4f64-9956-9f572bb4f210" name="Changes" comment="Merging for all subjects added, besides saving per subject">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,5 +63,9 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merging for all subjects added, besides saving per subject" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merging for all subjects added, besides saving per subject" />
   </component>
 </project>
