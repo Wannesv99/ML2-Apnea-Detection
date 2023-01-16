@@ -4,6 +4,10 @@
 # Data
 *.tsv
 *.csv
+*.qrs
+*.hea
+*.xws
+*.dat
 
 # Slurm
 *.out
