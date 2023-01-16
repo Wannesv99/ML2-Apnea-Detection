@@ -57,10 +57,14 @@ for file in files:
         if parts_file[1] == 'apn':
             subjects.append(parts_file[0])
 
-
-# Loop through subjects to merge and save to csv per subject
+# Loop through subjects to merge and save to csv per subject and merge all data into one file with all minutes
+ecg_w_ann_all = np.empty((0,6001))
 for subject in subjects:
     ecg_w_ann = merge_data_w_ann(subject)
     df = pd.DataFrame(ecg_w_ann)
-    df.to_csv("./" + physionet_folder + "/" + subject + ".csv", header=False, index=False)
-    #np.savetxt("./"+physionet_folder+"/"+subject+".csv", ecg_w_ann, delimiter=",")
+    df.to_csv("./"+physionet_folder+"/"+subject+".csv", header=False, index=False)
+    ecg_w_ann_all = np.concatenate((ecg_w_ann_all,ecg_w_ann))
+
+# Save merge of all data into one big file with all minutes of all patients
+df = pd.DataFrame(ecg_w_ann_all)
+df.to_csv("./" + physionet_folder + "/all_subjects.csv", header=False, index=False)
