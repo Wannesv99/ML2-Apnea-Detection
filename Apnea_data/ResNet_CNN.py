@@ -75,8 +75,8 @@ def get_resnet_model(categories=2):
         out = keras.layers.MaxPool1D(5, 2)(out)
         return out
 
-    kernels = 32
-    stride = 5
+    kernels = 47  # number of output neurons per layer
+    stride = 1  # movement between kernel_x and kernel_{x+1}
 
     inputs = keras.layers.Input([6000, 1])
     X = keras.layers.Conv1D(kernels, stride)(inputs)
@@ -84,7 +84,7 @@ def get_resnet_model(categories=2):
     X = residual_block(X, kernels, stride)
     X = residual_block(X, kernels, stride)
     X = residual_block(X, kernels, stride)
-    X = residual_block(X, kernels, stride)
+    #    X = residual_block(X, kernels, stride) # excluded to get just 4 blocks like in the DSN
     X = keras.layers.Flatten()(X)
     X = keras.layers.Dense(32, activation='relu')(X)
     X = keras.layers.Dense(32, activation='relu')(X)

@@ -1,3 +1,4 @@
+
 import pandas as pd
 import glob
 
@@ -31,10 +32,10 @@ def train_test_split(subject_df: pd.DataFrame, train_fraction=0.8, train_seed=10
     train_frame = subject_df.sample(frac=train_fraction, random_state=train_seed)
     test_frame  = subject_df.drop(train_frame.index)
     assert len(train_frame) + len(test_frame) == len(subject_df), f"Expected lengths of train and test set to be {len(df)}, got: {len(train) + len(test)}."
-    return train_frame, test_frame
+    return (train_frame, test_frame)
 
 
-def balance_classes(df: pd.DataFrame, seed=10: int) -> pd.DataFrame:
+def balance_classes(df: pd.DataFrame, seed=10) -> pd.DataFrame:
     '''
         Take binary labelled dataframe and resample both classes to match 
         the class with the lowest sample frequency.
@@ -65,3 +66,7 @@ df = balance_classes(df)
 
 # split in train and test set 80/20
 train, test = train_test_split(df, train_fraction=0.8, train_seed=33)
+
+# Save the balanced train and test data to csv
+train.to_csv("./pysionet_apnea/train_balanced.csv", header=False, index=False)
+test.to_csv("./pysionet_apnea/test_balanced.csv", header=False, index=False)

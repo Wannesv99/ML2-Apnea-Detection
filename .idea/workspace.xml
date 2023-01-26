@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="39f206a3-b2e9-4f64-9956-9f572bb4f210" name="Changes" comment="Merging for all subjects added, besides saving per subject">
+    <list default="true" id="39f206a3-b2e9-4f64-9956-9f572bb4f210" name="Changes" comment="Add creating a file with all subjects concatenated">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Apnea_data/organize_ecg.py" beforeDir="false" afterPath="$PROJECT_DIR$/Apnea_data/organize_ecg.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Apnea_data/ResNet_CNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/Apnea_data/ResNet_CNN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Apnea_data/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/Apnea_data/preprocess.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,11 +30,11 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -72,7 +74,19 @@
       <workItem from="1671460808239" duration="1265000" />
       <workItem from="1671721345007" duration="2124000" />
       <workItem from="1673617419270" duration="2547000" />
+      <workItem from="1673949256542" duration="883000" />
+      <workItem from="1673950272722" duration="282000" />
+      <workItem from="1673983156182" duration="1603000" />
+      <workItem from="1674747674327" duration="631000" />
     </task>
+    <task id="LOCAL-00001" summary="Add creating a file with all subjects concatenated">
+      <created>1673886084832</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1673886084833</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -80,6 +94,11 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Merging for all subjects added, besides saving per subject" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merging for all subjects added, besides saving per subject" />
+    <MESSAGE value="Add creating a file with all subjects concatenated" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add creating a file with all subjects concatenated" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/preprocess_py$preprocess.coverage" NAME="preprocess Coverage Results" MODIFIED="1673983618150" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Apnea_data" />
+    <SUITE FILE_PATH="coverage/preprocess_py$filter_noise.coverage" NAME="filter_noise Coverage Results" MODIFIED="1673983682578" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Apnea_data" />
   </component>
 </project>
